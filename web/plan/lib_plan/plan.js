@@ -5,6 +5,11 @@
  */
 
 
-$(document).ready(function (){
-    
+$(document).ready(function () {
+    $('#ok').click(function () {
+        $.post("/calc", function (data) {
+            $("#view_all").html(data);
+        });
+
+    });
 });

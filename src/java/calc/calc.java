@@ -34,13 +34,13 @@ public class calc extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            
+
             calcUtil.CalcUtil.Con();
-            
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -67,7 +67,16 @@ public class calc extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter pw = response.getWriter();
+        try {
+            response.setCharacterEncoding("utf-8");
+            request.setCharacterEncoding("utf-8");
+            pw.println("Отработан POST–запрос");
+        } catch (Exception e) {
+            pw.println(e.toString());
+
+        }
+//        processRequest(request, response);
     }
 
     /**
@@ -81,7 +90,16 @@ public class calc extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter pw = response.getWriter();
+        try {
+            response.setCharacterEncoding("utf-8");
+            request.setCharacterEncoding("utf-8");
+            pw.println("Отработан POST–запрос");
+        } catch (Exception e) {
+            pw.println(e.toString());
+
+        }
+//        processRequest(request, response);
     }
 
     /**
