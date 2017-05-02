@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.Formatter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,11 +72,13 @@ public class calc extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw = response.getWriter();
         try {
             response.setCharacterEncoding("utf-8");
             request.setCharacterEncoding("utf-8");
-            pw.println("Отработан POST–запрос");
+            pw.println("Отработан GET–запрос");
+            pw.println(3 / 10);
         } catch (Exception e) {
             pw.println(e.toString());
 
@@ -90,11 +97,28 @@ public class calc extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+//        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/plain;charset=UTF-8");
+        response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
+        Formatter jsonFormat = new Formatter();
         try {
-            response.setCharacterEncoding("utf-8");
-            request.setCharacterEncoding("utf-8");
-            pw.println("Отработан POST–запрос");
+            Class.forName("org.h2.Driver");
+            String db_url = "jdbc:h2:~/calculation/calc";
+            String db_login = "rio";
+            String db_pass = "---===";
+            Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
+            Statement calc_statement = calc_conn.createStatement();
+            ResultSet rs = calc_statement.executeQuery("SELECT * FROM \"PUBLIC\".CALC_TEST WHERE CALCID=654;");
+            ResultSet rs_rowCount = calc_statement.executeQuery("SELECT COUNT(*) FROM \"PUBLIC\".CALC_TEST;");
+            jsonFormat.format("{\"rowCount\":\"%g\"}", rs_rowCount.getRow());
+            int columnCount = rs.getMetaData().getColumnCount();
+//            for (int i = 1; i <= columnCount; i++) {
+//                pw.print(rs.getMetaData().getColumnName(i).toString()+"<br />");
+//            }
+            pw.print(jsonFormat.toString());
+            calc_conn.close();
         } catch (Exception e) {
             pw.println(e.toString());
 
