@@ -103,21 +103,25 @@ public class calc extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
         Formatter jsonFormat = new Formatter();
+        Connection calc_conn = null;
         try {
-            Class.forName("org.h2.Driver");
-            String db_url = "jdbc:h2:~/calculation/calc";
+            Class.forName("org.postgresql.Driver");
+            String db_url = "jdbc:postgresql://localhost:5432/rio";
             String db_login = "rio";
             String db_pass = "---===";
-            Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
+
+            calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
             Statement calc_statement = calc_conn.createStatement();
-            ResultSet rs = calc_statement.executeQuery("SELECT * FROM \"PUBLIC\".CALC_TEST WHERE CALCID=654;");
-            ResultSet rs_rowCount = calc_statement.executeQuery("SELECT COUNT(*) FROM \"PUBLIC\".CALC_TEST;");
-            jsonFormat.format("{\"rowCount\":\"%g\"}", rs_rowCount.getRow());
-            int columnCount = rs.getMetaData().getColumnCount();
+            //ResultSet rs = calc_statement.executeQuery("SELECT * FROM plan WHERE CALCID=654;");
+            ResultSet rs_rowCount = calc_statement.executeQuery("SELECT COUNT(calcid) as N FROM plan;");
+            rs_rowCount.next();
+            jsonFormat.format("{\"rowCount\":\"%d\"}", rs_rowCount.getInt("N"));
+//            jsonFormat.format("{\"rowCount\":\"%d\"}", 123);
 //            for (int i = 1; i <= columnCount; i++) {
 //                pw.print(rs.getMetaData().getColumnName(i).toString()+"<br />");
 //            }
             pw.print(jsonFormat.toString());
+            rs_rowCount.close();
             calc_conn.close();
         } catch (Exception e) {
             pw.println(e.toString());

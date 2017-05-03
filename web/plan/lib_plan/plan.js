@@ -8,8 +8,8 @@
 $(document).ready(function () {
     $('#ok').click(function () {
         $.post("/calc", function (data) {
-            $("#view_all").html(data);
-        });
+            $("#view_all").html(data.rowCount/3);
+        }, "json");
 
     });
 });
