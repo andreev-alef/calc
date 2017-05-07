@@ -37,3 +37,4 @@ print "Листов макета: {0}".format(layout_sheets)
 print "Число брошюр: {0}".format(brochure_count)
 print "Белых листов на тираж: {0}".format(white_sheets_per_edition)
 print "Пачек белой бумаги на тираж: {0}".format(white_batches_per_edition)
+
