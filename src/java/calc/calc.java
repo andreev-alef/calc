@@ -13,7 +13,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Formatter;
-
+import calcUtil.CalcUtil;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,8 +43,6 @@ public class calc extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-
-            calcUtil.CalcUtil.Con();
 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -98,36 +96,18 @@ public class calc extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        response.setContentType("application/json;charset=UTF-8");
-        response.setContentType("text/plain;charset=UTF-8");
+//        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        Formatter jsonFormat = new Formatter();
-        Formatter frmtr = new Formatter();
-        Connection calc_conn = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            String db_url = "jdbc:postgresql://localhost:5432/rio";
-            String db_login = "rio";
-            String db_pass = "---===";
-            String sqlString="select calcid, title, calc_date from plan where calcid=844;";
 
-            calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
-            
-            Statement calc_statement = calc_conn.createStatement();
-            
-            ResultSet rs_rowCount = calc_statement.executeQuery("SELECT COUNT(calcid) as N FROM plan;");
-            rs_rowCount.next();
-            jsonFormat.format("{\"rowCount\":\"%d\"}", rs_rowCount.getInt("N"));
-            ResultSet rs_data = calc_statement.executeQuery("SELECT title FROM plan WHERE CALCID=654;");
-            int columnCount = rs_data.getMetaData().getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                frmtr.format("%s<br />", rs_data.getObject(rs_data.getMetaData().getColumnName(i)).toString());
-            }
-            pw.print(jsonFormat.toString());
-            pw.print(frmtr.toString());
-            rs_rowCount.close();
-            calc_conn.close();
+        try {
+//            String POSTparameter = request.getParameter("calcID");
+//            Integer calcID = Integer.parseInt(POSTparameter);
+
+//            pw.print(String.format("{\"title\":\"%s\"}", POSTparameter));
+            pw.print(CalcUtil.getAll());
+
         } catch (Exception e) {
             pw.println(e.toString());
 
