@@ -1,10 +1,11 @@
 # -*-coding: utf-8-*-
-import sys
+
+import string
 
 import tornado
 import tornado.ioloop
 import tornado.web
-import string
+from app.calc import Record
 
 
 # print "Content-Type: text/html"     # HTML is following
@@ -17,6 +18,18 @@ import string
 # print 'body{font-family: "PT Mono"}'
 # print '</style>'
 # print '<body>'
+
+class Calc(tornado.web.RequestHandler):
+    def post(self):
+        # self.set_header("Content-Type", "text/plain")
+        # self.write(u"Имя: {s}".format(s=self.get_argument("name")))
+        try:
+            rec = Record()
+            self.write(rec.getAll())
+        except BaseException as strExcaption:
+            errStr = str.decode(("%s" % strExcaption), "cp1251")
+            self.write(errStr)
+
 
 class Index(tornado.web.RequestHandler):
     def get(self):
@@ -34,8 +47,8 @@ def makeApp():
     return tornado.web.Application([
         (r"/lib/(.*)", tornado.web.StaticFileHandler, {"path": "./static/lib"}),
         (r"/", Index),
-        (r"/plan", Plan)
-        # (r"/(.*)", tornado.web.StaticFileHandler, {"path":"D:/www/PycharmProjects/calc/static"})
+        (r"/plan", Plan),
+        (r"/calc", Calc)
     ])
 
 

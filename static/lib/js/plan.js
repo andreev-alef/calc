@@ -10,7 +10,7 @@ $(document).ready(function () {
 //        $.post("/calc", function (data) {
 //            $("#view_all").html(data.rowCount);
 //        }, "json");
-        $.post("/calc", function (data) {
+        $.post("/calc",{name: $("#calcID").val()}, function (data) {
             $("#view_all").html(data);
         }, "html");
 
