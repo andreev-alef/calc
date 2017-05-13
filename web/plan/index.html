@@ -9,22 +9,43 @@
         <link href="../lib/bs/css/bootstrap.min.css" rel="stylesheet" />
         <link href="../lib/css/fonts.css" rel="stylesheet" />
         <link href="../lib/css/main.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="../lib/img/check.ico" />
         <script src="../lib/js/jquery/jquery-2.2.1.min.js"></script>
+        <script src="../lib/bs/js/bootstrap.min.js"></script>
         <script src="./lib_plan/plan.js"></script>
         <!--<script src="./lib/js/angular.min.js"></script>-->
     </head>
     <body>
         <div class="root">
             <!--<h1>Калькуляция плановые издания</h1>-->
-            <div class="btn btn-primary" id="ok">Показать все записи</div>
-            <hr />
-            <div class="btn btn-info" id="showRecord">Показать запись</div>
-            <div class="input-group">
-                <input id="calcID" type="text" class="form-control" value="553" />
+            <div class="wr-header">
+                <div class="btn btn-primary" id="ok">Показать все записи</div>
             </div>
-            <hr />
-            <div class="data" id="view_all"></div>
-            <div class="data" id="view_rec">Запись:<br /></div>
+            <div class="wr-data">
+                <table class="table table-striped rows" id="view_all">
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>№</th>
+                        <th>Дата</th>
+                        <th>Наименование</th>
+                    </tr>
+                    <tr data-id="553" class="calc_row">
+                        <td class="print">
+                            <img src="../lib/img/print.ico" alt="Распечатать" /></td>
+                        <td class="calcid">553</td>
+                        <td class="calcdate">2008-11-01</td>
+                        <td class="title">Интеллект будущего.Отв. ред.Смолин С.П.</td>
+                    </tr>
+                    <tr data-id="595" class="calc_row" onclick="openCalc(this);">
+                        <td class="print">
+                            <img src="../lib/img/print.ico" data-id="595" alt="Распечатать" onclick="printCalc(this);" />
+                        </td>
+                        <td class="calcid">595</td>
+                        <td class="calcdate">2010-03-01</td>
+                        <td class="title">Автореферат Социально-педагогическая поддержка младших школьников из дисфункциональных семей.</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

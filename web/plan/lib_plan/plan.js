@@ -4,21 +4,32 @@
  * and open the template in the editor.
  */
 
+function openCalc(e) {
+    alert($(e).data('id'));
+}
+
+function printCalc(e) {
+//    $(e).tooltip({title: "Распечатать", placement: "right"});
+    alert('печать калькуляции №' + $(e).data('id'));
+    event.stopPropagation();
+}
 
 $(document).ready(function () {
     $('#ok').click(function () {
-        $.post("/calc", function (data) {
-            $("#view_all").html(data.rows[10].title);
-        }, "json");
-//        r = {"rows": [{"calcid": 801, "calc_date": "2015-02-03", "title": "Нормативно-правовое обеспечение дошкольного образования"}, {"calcid": 802, "calc_date": "2015-02-03", "title": "Формирование социального опыта школьников средствами экологического образования."}, {"calcid": 803, "calc_date": "2015-02-12", "title": "Работа Тресвятский"}]};
-//        $("#view_all").html(r["rows"][0].calcid);
-
-//        $.post("/calc", function (data) {
-//            $("#view_all").html(data);
-//        }, "html");
-
-
+        try {
+            for (i = 0; i < 21; i++) {
+                $('<tr class="calc_row" data-id="' + i + '" onclick="openCalc(this);">' +
+                        '<td class="print"><img src="../lib/img/print.ico" data-id=' + i + ' alt="Распечатать" onclick="printCalc(this);" /></td>' +
+                        '<td class="calcid">' + i + '</td>' +
+                        '<td class="calcdate">2008-11-01</td>' +
+                        '<td class="title">Интеллект будущего.Отв. ред.Смолин С.П.</td>' +
+                        '</tr>').appendTo($(".rows"));
+            }
+        } catch (exception) {
+            $('.wr-data').html('<div class="alert alert-danger" role="alert">' + exception.toString() + '</div>');
+        }
     });
+
     $("#showRecord").click(function () {
         var record = "";
         $.post("/calc", {calcID: $("#calcID").val()}, function (data) {

@@ -1,73 +1,74 @@
-@root_width: 100%;
-@wr-header_height: 140px;
-@menu_item_height: 100%;
-@menu_item_width: 150px;
-@menu_item_color: 75%;
-@menu_item_number: 4;
-@under-header_height: 13px;
-@wr-content_width: 1100px;
-@wr-content_min-height: 1100px;
-@content_height: 470px;
-@content-item_height: @content_height;
-@banner_height: 180px;
+@wr_header_heght: 140px;
 
-@transition_duration_slow: 700ms;
-@transition_duration_fast: 400ms;
-
-@i: 1;
-
-.menu-item-generator(@i) when (@i <= @menu_item_number){
-    .menu-item-generator((@i + 1));
-    .menu-item:nth-child(@{i}){
-        left: @menu_item_width * (@i - 1);
-    }
-}
-
-.root,
+/*.root,*/
 .fio,
 .main-menu,
 .menu-item,
 .banner,
-.wr-content,
+.wr-data,
 .content-item,
-.content-item-ico
-{
+.content-item-ico {
     position: absolute;
 }
-
-.content{
+.content {
     position: relative;
 }
-
-@media screen{
+@media screen {
     body {
         margin: 0px;
         font-family: 'PT Sans';
         font-size: 14px;
         background-color: #FFF;
     }
-
-    .root{
-        min-height: 1700px;
-        width: @root_width;
-        left: 50%;
-        margin-left: -@root_width/2;
+    .root {
+        /*min-height: 1700px;*/
+        /*width: 100%;*/
+        /*left: 50%;*/
+        margin-left: 50px;
+        margin-right: 50px;
+        font-family: 'PT Mono';
     }
-
-    .wr-header{
+    .wr-header {
         position: fixed;
         background-color: #003838;
         top: 0px;
         left: 0px;
         width: 100%;
-        height: @wr-header_height;
+        height: @wr_header_heght;
+        padding-top: 50px;
+        text-align: center;
         z-index: 1000;
     }
-    h1{
+    .wr-data {
+        background-color: #FFF;
+        top: @wr_header_heght;
+        left: 0px;
+        width: 100%;
+        z-index: 900;
+    }
+    h1 {
         font-family: 'Exo2';
     }
-}
-
-@media screen and (max-width: 960px){
-
+    tr {
+        cursor: default;
+        
+    }
+    .print{
+        cursor: pointer;        
+    }
+    tr:hover {
+        background-color: #DDD  !important;
+    }
+    th{
+        font-family: 'Open Sans';
+        font-size: 20px;
+    }
+    td{
+        font-family: 'Open Sans';
+        font-size: 18px;
+    }
+    #ok{
+        font-family: 'Open Sans';
+    }
+    
 }

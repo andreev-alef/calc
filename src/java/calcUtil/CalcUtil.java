@@ -92,12 +92,11 @@ public class CalcUtil {
         String db_url = "jdbc:postgresql://localhost:5432/rio";
         String db_login = "rio";
         String db_pass = "---===";
+        String queryString = "select json_build_object('rows', array_to_json(array_agg(calcrow))) as j from (select calcid, calc_date, title from plan order by calcid asc) as calcrow;";
         Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
         Statement calc_statement = calc_conn.createStatement();
-        ResultSet rsAll = calc_statement.executeQuery("select json_build_object('rows', array_to_json(array_agg(calcrow))) as j from (select calcid, calc_date, title from plan where calcid > 800) as calcrow;");
-//        ResultSet rsAll = calc_statement.executeQuery("select calcid, title, calc_date from plan where calid=645;");
+        ResultSet rsAll = calc_statement.executeQuery(queryString);
         rsAll.next();
-
         return rsAll.getString("j");
     }
 
