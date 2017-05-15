@@ -33,7 +33,7 @@ function calcShowAll() {
                 tableBody += '<tr class="calc_row" data-id="' + rows.row[i].calcid + '" onclick="openCalc(this);">' +
                         '<td class="print"><img src="../lib/img/print.ico" data-id=' + rows.row[i].calcid + ' alt="Распечатать" onclick="printCalc(this);" /></td>' +
                         '<td class="calcid">' + rows.row[i].calcid + '</td>' +
-                        '<td class="calcdate">' + rows.row[i].calc_date + '</td>' +
+                        '<td class="calcdate">' + rows.row[i].calcdate + '</td>' +
                         '<td class="title">' + rows.row[i].title + '</td>' +
                         '</tr>';
             }
