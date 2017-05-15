@@ -19,33 +19,11 @@
         <div class="root">
             <!--<h1>Калькуляция плановые издания</h1>-->
             <div class="wr-header">
-                <div class="btn btn-primary" id="ok">Показать все записи</div>
+                <div class="btn btn-primary" id="showAll">Показать все записи</div>
+                <div class="btn btn-primary" id="showRowCount">Показать количество записей</div>
+                <div class="alert alert-success" id="y"></div>
             </div>
-            <div class="wr-data">
-                <table class="table table-striped rows" id="view_all">
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th>№</th>
-                        <th>Дата</th>
-                        <th>Наименование</th>
-                    </tr>
-                    <tr data-id="553" class="calc_row">
-                        <td class="print">
-                            <img src="../lib/img/print.ico" alt="Распечатать" /></td>
-                        <td class="calcid">553</td>
-                        <td class="calcdate">2008-11-01</td>
-                        <td class="title">Интеллект будущего.Отв. ред.Смолин С.П.</td>
-                    </tr>
-                    <tr data-id="595" class="calc_row" onclick="openCalc(this);">
-                        <td class="print">
-                            <img src="../lib/img/print.ico" data-id="595" alt="Распечатать" onclick="printCalc(this);" />
-                        </td>
-                        <td class="calcid">595</td>
-                        <td class="calcdate">2010-03-01</td>
-                        <td class="title">Автореферат Социально-педагогическая поддержка младших школьников из дисфункциональных семей.</td>
-                    </tr>
-                </table>
-            </div>
+            <div class="wr-data"></div>
         </div>
     </body>
 </html>

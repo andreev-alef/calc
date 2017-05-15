@@ -100,14 +100,17 @@ public class calc extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-
         try {
-//            String POSTparameter = request.getParameter("calcID");
-//            Integer calcID = Integer.parseInt(POSTparameter);
-
-//            pw.print(String.format("{\"title\":\"%s\"}", POSTparameter));
-            pw.print(CalcUtil.getAll());
-
+            String POSTparameter = request.getParameter("command");
+            switch (POSTparameter) {
+                case "get_all": {
+                    pw.print(CalcUtil.getAll());
+                }
+                break;
+                case "get_row_count":{
+                    pw.print(CalcUtil.getRowCount());
+                }break;
+            }
         } catch (Exception e) {
             pw.println(e.toString());
 
