@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -62,17 +65,29 @@ public class CalcUtil {
         }
     }
 
-    public static String getAll() throws ClassNotFoundException, SQLException {
+    public static String getAll(String orderBy, String orderByDimension) throws ClassNotFoundException, SQLException {
+
         Class.forName("org.postgresql.Driver");
         String db_url = "jdbc:postgresql://localhost:5432/rio";
         String db_login = "rio";
         String db_pass = "---===";
-        String queryString = "select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by calcid asc) as calcrow;";
+        Logger getAllLogger = Logger.getLogger(CalcUtil.class.getName());
+        try {
+            FileHandler logFH = new FileHandler("getAll.log");
+            getAllLogger.addHandler(logFH);
+
+        } catch (Exception e) {
+            getAllLogger.log(Level.WARNING, e.toString());
+        }
+//        String queryString = "select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by calcid asc) as calcrow;";
+        String queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan order by %s %s) as calcrow;", orderBy, orderByDimension);
+        getAllLogger.log(Level.WARNING, queryString);
         Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
         Statement calc_statement = calc_conn.createStatement();
         ResultSet rsAll = calc_statement.executeQuery(queryString);
         rsAll.next();
         return rsAll.getString("j");
+
     }
 
     public static String getRecord(Integer calcID) throws ClassNotFoundException, SQLException {

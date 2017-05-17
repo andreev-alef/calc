@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../lib/bs/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../lib/css/fonts.css" rel="stylesheet" />
+        <link href="../lib/css/main.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="../lib/img/check.ico" />
+        <script src="../lib/js/jquery/jquery-2.2.1.min.js"></script>
+        <script src="../lib/bs/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            function ok(q = 'bad…') {
+                alert(q);
+            }
+            var f = true;
+
+            $(document).ready(function () {
+                try {
+                    $('#ok').click(function () {
+                        f = !f;
+                        ok(f);
+                    });
+                } catch (exception) {
+                    $('.wr-data').html('<div class="alert alert-danger" role="alert">' + exception.toString() + '</div>');
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div class="btn btn-info" id="ok">— OK —</div>
+        <div class="wr-data" id="#"></div>
+    </body>
+</html>

@@ -14,6 +14,9 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Formatter;
 import calcUtil.CalcUtil;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -100,20 +103,27 @@ public class calc extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
+        Logger log = Logger.getLogger(getClass().getName());
+        FileHandler logfh = new FileHandler("calc.log");
         try {
             String POSTparameter = request.getParameter("command");
+            String POSTorderBy = request.getParameter("orderBy");
+            String POSTorderByDimension = request.getParameter("orderByDimension");
             switch (POSTparameter) {
                 case "get_all": {
-                    pw.print(CalcUtil.getAll());
+                    pw.print(CalcUtil.getAll(POSTorderBy, POSTorderByDimension));
                 }
                 break;
-                case "get_row_count":{
+                case "get_row_count": {
                     pw.print(CalcUtil.getRowCount());
-                }break;
+                }
+                break;
             }
         } catch (Exception e) {
             pw.println(e.toString());
-
+            log.addHandler(logfh);
+            log.log(Level.WARNING, e.toString());
+            
         }
 //        processRequest(request, response);
     }

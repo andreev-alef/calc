@@ -8,7 +8,7 @@
  * Created: 15.05.2017
  */
 
-select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by title asc;
+-- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by title asc;
 
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan;
 

@@ -50,19 +50,29 @@
     h1 {
         font-family: 'Exo2';
     }
-    tr, .print {
+    .calc_row, .print{
         cursor: pointer;
     }
-    tr:hover {
-        background-color: #DDD  !important;
+    .calc_row:hover {
+        background-color: #D9EDF7  !important;
     }
-    th{
+    .calc_row:hover > td {
+        text-decoration: underline;
+    }
+    .column_header{
         font-family: 'Open Sans';
-        font-size: 20px;
+        font-size: 16px;
+        text-align: center;
+        color: #3B7795;
+        cursor: url('../img/updown32.ico'), pointer;
+    }
+    .column_header:hover{
+        text-decoration: underline;
+        background-color: #D9EDF7;
     }
     td{
-        font-family: 'Open Sans';
-        font-size: 18px;
+        font-family: 'PT Sans', 'Open Sans';
+        font-size: 16px;
     }
     #ok{
         font-family: 'Open Sans';
