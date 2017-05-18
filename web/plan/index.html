@@ -17,14 +17,25 @@
     </head>
     <body>
         <div class="root">
-            <h1>Калькуляция плановые издания</h1>
             <div class="wr-header">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Показать записи за текущий…</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group order-by-group">
+                            <div class="btn btn-primary" id="calcShowCurrentYear">год</div>
+                            <div class="btn btn-info" id="calcShowCurrentMonth">месяц</div>
+                            <div class="btn btn-success" id="calcShowCurrentDay">день</div>
+                        </div>
+                    </div>
+                </div>  
             </div>
             <div class="wr-data"></div>
 
         </div>
         <div class="wr-footer">
-            <div class="alert alert-info info-panel" id="info">Информация.</div>
+            <div class="bg-info info-panel" id="info">&nbsp;</div>
         </div>
 
     </body>

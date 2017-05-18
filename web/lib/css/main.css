@@ -24,22 +24,28 @@
     /*left: 50%;*/
     margin-left: 50px;
     margin-right: 50px;
-    font-family: 'PT Mono';
+    font-family: 'Open Sans';
   }
   .wr-header {
     position: fixed;
-    background-color: #003838;
+    background-color: #FFF;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #FFF;
+    border-bottom-color: #000;
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 100px;
-    padding-top: 50px;
-    text-align: center;
+    height: 150px;
+    padding: 5px;
     z-index: 1000;
+  }
+  .panel-primary {
+    width: 290px;
   }
   .wr-data {
     background-color: #FFF;
-    top: 100px;
+    top: 150px;
     left: 0px;
     width: 100%;
     z-index: 900;
@@ -52,9 +58,11 @@
     background-color: #FFF;
     width: 100%;
   }
+  .order-by-group {
+    margin-left: 70px;
+  }
   .info-panel {
-    margin-bottom: 0px;
-    border-radius: 0px;
+    padding: 10px;
   }
   h1 {
     font-family: 'Exo2';
