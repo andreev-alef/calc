@@ -10,12 +10,6 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -71,16 +65,12 @@ public class CalcUtil {
         String db_url = "jdbc:postgresql://localhost:5432/rio";
         String db_login = "rio";
         String db_pass = "---===";
-        
-        
-//        String queryString = "select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by calcid asc) as calcrow;";
         String queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan order by %s %s) as calcrow;", orderBy, orderByDimension);
         Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
         Statement calc_statement = calc_conn.createStatement();
         ResultSet rsAll = calc_statement.executeQuery(queryString);
         rsAll.next();
         return rsAll.getString("j");
-
     }
 
     public static String getRecord(Integer calcID) throws ClassNotFoundException, SQLException {
@@ -89,20 +79,12 @@ public class CalcUtil {
         String db_login = "rio";
         String db_pass = "---===";
         String queryString = String.format("select calcid, title, calc_date from plan where calcid=%d;", calcID);
-        JSONObject record = new JSONObject();
         Integer calcId = new Integer(0);
         String calcTitle = "";
         Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
         Statement calc_statement = calc_conn.createStatement();
         ResultSet rs = calc_statement.executeQuery(queryString);
         rs.next();
-
-        record.put("calcid", rs.getInt("calcid"));
-        record.put("title", rs.getString("title"));
-        record.put("calcDate", rs.getDate("calc_date").toString());
-
-//            s += String.format("row_%d — %s — %td.%tm.%tY<br />", rsAll.getInt("calcid"), rsAll.getString("title"), rsAll.getDate("calc_date"), rsAll.getDate("calc_date"), rsAll.getDate("calc_date"));
-//        return s;
-        return record.toJSONString();
+        return "OK";
     }
 }

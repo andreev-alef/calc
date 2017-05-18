@@ -1,4 +1,6 @@
-@wr_header_heght: 140px;
+
+@wr_header_heght: 100px;
+@wr_header_bg_color: #003838;
 
 /*.root,*/
 .fio,
@@ -30,7 +32,7 @@
     }
     .wr-header {
         position: fixed;
-        background-color: #003838;
+        background-color: @wr_header_bg_color;
         top: 0px;
         left: 0px;
         width: 100%;
@@ -45,6 +47,18 @@
         left: 0px;
         width: 100%;
         z-index: 900;
+    }
+    .wr-footer{
+        position: fixed;
+        bottom: 0px;
+        z-index: 1000;
+        height: auto;
+        background-color: #FFF;
+        width: 100%;
+    }
+    .info-panel{
+        margin-bottom: 0px;
+        border-radius: 0px;
     }
 
     h1 {
@@ -77,5 +91,6 @@
     #ok{
         font-family: 'Open Sans';
     }
+    
 
 }

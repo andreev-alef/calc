@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 
+var orderByDimension = '';
 var orderByDimensionFlag = true;
 var previousColumn = '';
+var POSTparam = {};
 
 function comma2dot(sourceString) {
     let strComma = sourceString.toString();
@@ -39,17 +41,22 @@ function calcShowAll(element) {
         let url = '/calc';
         let dataType = 'html';
         let orderBy = 'calcid';
-        let orderByDimension = 'asc';
+
         if ($(element).data('column_name') === undefined) {
             orderBy = "calcid";
         } else {
             orderBy = $(element).data('column_name');
         }
-        orderByDimensionFlag = previousColumn !== orderBy;
-        let POSTparam = {
+
+
+        orderByDimension = orderByDimension === 'asc' ? 'desc' : 'asc';
+        if (previousColumn !== orderBy) {
+            orderByDimension = 'asc';
+        }
+        POSTparam = {
             "command": "get_all",
             "orderBy": orderBy,
-            "orderByDimension": orderByDimensionFlag ? 'asc' : 'desc'
+            "orderByDimension": orderByDimension
         };
         let rows = {};
         let tableHeader = '<table class="table table-striped table-bordered rows" id="view_all">' +
@@ -85,8 +92,6 @@ function calcShowAll(element) {
                 $('.wr-data').html('<div class="alert alert-danger" role="alert">' + exception.toString() + '<br />' + data + '</div>');
             }
         }, dataType);
-
-        orderByDimensionFlag = !orderByDimensionFlag;
         previousColumn = orderBy;
     } catch (exception) {
         alert(exception.toString());
@@ -97,11 +102,10 @@ function calcShowRowCount() {
     try {
         var url = '/calc';
         var dataType = 'json';
-        var route = {"command": "get_row_count"};
-        $.post(url, route, function (data) {
+        POSTparam = {"command": "get_row_count"};
+        $.post(url, POSTparam, function (data) {
             let N = data.count;
-            $('#y').html(N);
-            $('#y').fadeIn('slow');
+            $('#info').html('Всего записей:&nbsp;' + N);
         }, dataType);
 
     } catch (exception) {
@@ -111,16 +115,10 @@ function calcShowRowCount() {
 
 $(document).ready(function () {
     calcShowAll();
+    calcShowRowCount();
 
     $('.btnPrint').click(function () {
         printCalc(this);
     });
-
-    $('#y').css({'display': 'none'});
-
-    $('#showRowCount').click(function (e) {
-        calcShowRowCount();
-    });
-
 }
 );

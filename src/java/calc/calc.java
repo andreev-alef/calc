@@ -103,8 +103,6 @@ public class calc extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        Logger log = Logger.getLogger(getClass().getName());
-        FileHandler logfh = new FileHandler("calc.log");
         try {
             String POSTparameter = request.getParameter("command");
             String POSTorderBy = request.getParameter("orderBy");
@@ -121,9 +119,6 @@ public class calc extends HttpServlet {
             }
         } catch (Exception e) {
             pw.println(e.toString());
-            log.addHandler(logfh);
-            log.log(Level.WARNING, e.toString());
-            
         }
 //        processRequest(request, response);
     }
