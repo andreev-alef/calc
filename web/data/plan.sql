@@ -7,8 +7,9 @@
  * Author:  andreev_af
  * Created: 15.05.2017
  */
-select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by calcid asc;
--- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date)=date_part('year', now()) and date_part('month', calc_date)=3) order by calcid asc;
+-- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by calcid asc;
+-- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now())) order by calcid asc;
+-- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now()) and date_part('day', calc_date) = date_part('day', now())) order by calcid asc;
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by title asc;
 
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan;
@@ -20,3 +21,7 @@ select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena
 -- select row_to_json(calcrow) as rowCount from (select count(calcid) from plan) as calcrow;
 
 -- copy (select json_build_object('rows', array_to_json(array_agg(calcrow))) as j from (select calcid, calc_date, title from plan order by calcid asc) as calcrow) to 'D:\www\NetBeansProjects\calc\web\data\cal.json';
+
+-- INSERT INTO plan (title, calc_date) VALUES ('Сергей Худиев. Диалог с атеистами: православные аргументы', now());
+-- INSERT INTO plan (title, calc_date) VALUES ('JS Mythbusters, сборник советов и практик по написанию производительного JavaScript-кода', now());
+-- INSERT INTO plan (title, calc_date) VALUES ('Анатомия каменных пришельцев', to_timestamp('04.05.2017', 'DD.MM.YYYY'));

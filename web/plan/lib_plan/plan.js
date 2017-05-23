@@ -12,7 +12,7 @@ let POSTparam = {};
 let url = '/calc';
 let dataType = 'html';
 
-function setInfo(info) {
+function info(info) {
     $("#info").html(info);
 }
 
@@ -94,8 +94,6 @@ function printCalc(element, e) {
 }
 
 function calcShowAll(element) {
-
-
     if ($(element).data('fast_filter') === undefined) {
         if ($(element).data('column_name') === undefined) {
             orderBy = "calcid";
@@ -127,7 +125,7 @@ function calcShowAll(element) {
     $.post(url, POSTparam, function (data) {
         writeTable(JSON.parse(data));
     }, dataType);
-    alert(POSTparam.command);
+    info(POSTparam.command);
 }
 
 function calcShowForCurrentYear(element) {
@@ -223,7 +221,7 @@ function calcShowRowCount() {
 
 $(document).ready(function () {
     calcShowAll();
-    calcShowRowCount();
+//    calcShowRowCount();
 
     $('.column_header').click();
     $('.fast_filter').click(function () {
