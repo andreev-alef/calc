@@ -7,7 +7,8 @@
  * Author:  andreev_af
  * Created: 15.05.2017
  */
-
+select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by calcid asc;
+-- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date)=date_part('year', now()) and date_part('month', calc_date)=3) order by calcid asc;
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by title asc;
 
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan;

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -59,13 +60,32 @@ public class CalcUtil {
         }
     }
 
-    public static String getAll(String orderBy, String orderByDimension) throws ClassNotFoundException, SQLException {
+    public static String getData(String command, String orderBy, String orderByDimension) throws ClassNotFoundException, SQLException {
 
         Class.forName("org.postgresql.Driver");
         String db_url = "jdbc:postgresql://localhost:5432/rio";
         String db_login = "rio";
         String db_pass = "---===";
-        String queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan order by %s %s) as calcrow;", orderBy, orderByDimension);
+        String queryString = "";
+        GregorianCalendar gc = new GregorianCalendar();
+        switch (command) {
+            case "get_all": {
+                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan order by %s %s) as calcrow;", orderBy, orderByDimension);
+            }
+            break;
+            case "get_all_for_current_year": {
+                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by %s %s) as calcrow;", orderBy, orderByDimension);
+            }
+            break;
+            case "get_all_for_current_month": {
+                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by %s %s) as calcrow;", orderBy, orderByDimension);
+            }
+            break;
+            case "get_all_for_current_day": {
+                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by %s %s) as calcrow;", orderBy, orderByDimension);
+            }
+            break;
+        }
         Connection calc_conn = DriverManager.getConnection(db_url, db_login, db_pass);
         Statement calc_statement = calc_conn.createStatement();
         ResultSet rsAll = calc_statement.executeQuery(queryString);

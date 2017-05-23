@@ -109,7 +109,19 @@ public class calc extends HttpServlet {
             String POSTorderByDimension = request.getParameter("orderByDimension");
             switch (POSTparameter) {
                 case "get_all": {
-                    pw.print(CalcUtil.getAll(POSTorderBy, POSTorderByDimension));
+                    pw.print(CalcUtil.getData(POSTparameter, POSTorderBy, POSTorderByDimension));
+                }
+                break;
+                case "get_all_for_current_year": {
+                    pw.print(CalcUtil.getData(POSTparameter, POSTorderBy, POSTorderByDimension));
+                }
+                break;
+                case "get_all_for_current_month": {
+                    pw.print(CalcUtil.getData(POSTparameter, POSTorderBy, POSTorderByDimension));
+                }
+                break;
+                case "get_all_for_current_day": {
+                    pw.print(CalcUtil.getData(POSTparameter, POSTorderBy, POSTorderByDimension));
                 }
                 break;
                 case "get_row_count": {
