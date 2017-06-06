@@ -46,25 +46,7 @@ function dot2comma(sourceString) {
 //    }
 //}
 
-function JSON_2_Table(jsonRows = {}) {
-    let rows = jsonRows;
-    let i = 0;
-    let N = rows.row.length;
-    let tableBody = '';
-    for (i = 0; i < N; i++) {
-        tableBody += '<tr class="calc_row" data-id="' + rows.row[i].calcid + '" onclick="openCalc(this);">' +
-                '<td class="print"><img class="btnPrint" src="../lib/img/print.ico" data-id=' + rows.row[i].calcid + ' alt="Распечатать" onclick="printCalc(this, event);" /></td>' + //onclick="printCalc(this);"
-                '<td class="calcid">' + rows.row[i].calcid + '</td>' +
-                '<td class="calcdate">' + rows.row[i].calcdate + '</td>' +
-                '<td class="title">' + ((rows.row[i].title === null) ? "" : rows.row[i].title) + '</td>' +
-                '<td class="tirazh">' + rows.row[i].tirazh + '</td>' +
-                '<td class="cena_knigi">' + dot2comma(Number.parseFloat(rows.row[i].cena_knigi).toFixed(2)) + '</td>' +
-                '<td class="cena_na_tirazh_nds">' + dot2comma(Number.parseFloat(rows.row[i].cena_na_tirazh_nds).toFixed(2)) + '</td>' +
-                '</tr>';
-    }
-    $('tbody').html(tableBody);
 
-}
 
 function getOrderBy(element) {
     try {
@@ -96,39 +78,30 @@ function printCalc(element, e) {
     e.stopPropagation();
 }
 
-function getData(POSTparam = {}) {
-//    if ($(element).data('fast_filter') === undefined) {
-//        if ($(element).data('column_name') === undefined) {
-//            orderBy = "calcid";
-//        } else {
-//            orderBy = $(element).data('column_name');
-//        }
-//        POSTparam.command = "get_all";
-//    } else {
-//        if ($(element).data('column_name') === undefined) {
-//            orderBy = "calcid";
-//        } else {
-//            orderBy = $(element).data('column_name');
-//        }
-//        POSTparam.command = $(element).data('fast_filter');
-//    }
-//
-//    orderByDimension = orderByDimension === 'asc' ? 'desc' : 'asc';
-//    if (previousColumn !== orderBy) {
-//        orderByDimension = 'asc';
-//    }
-//    previousColumn = orderBy;
-//    POSTparam = {
-//        "orderBy": orderBy,
-//        "orderByDimension": orderByDimension
-//    };
-//    POSTparam.orderBy = getOrderBy(element).colName;
-//    POSTparam.orderByDimension = getOrderBy(element).dimension;
+function write2Table(jsonRows = {}) {
+    let rows = jsonRows;
+    let i = 0;
+    let N = jsonRows.row.length;
+    let tableBody = '';
+    for (i = 0; i < N; i++) {
+        tableBody += '<tr class="calc_row" data-id="' + rows.row[i].calcid + '" onclick="openCalc(this);">' +
+                '<td class="print"><img class="btnPrint" src="../lib/img/print.ico" data-id=' + rows.row[i].calcid + ' alt="Распечатать" onclick="printCalc(this, event);" /></td>' + //onclick="printCalc(this);"
+                '<td class="calcid">' + rows.row[i].calcid + '</td>' +
+                '<td class="calcdate">' + rows.row[i].calcdate + '</td>' +
+                '<td class="title">' + ((rows.row[i].title === null) ? "" : rows.row[i].title) + '</td>' +
+                '<td class="tirazh">' + rows.row[i].tirazh + '</td>' +
+                '<td class="cena_knigi">' + dot2comma(Number.parseFloat(rows.row[i].cena_knigi).toFixed(2)) + '</td>' +
+                '<td class="cena_na_tirazh_nds">' + dot2comma(Number.parseFloat(rows.row[i].cena_na_tirazh_nds).toFixed(2)) + '</td>' +
+                '</tr>';
+    }
+    $('tbody').html(tableBody);
+}
 
+function getData(POSTparam = {}) {
     $.post(url, POSTparam, function (data) {
-        JSON_2_Table(JSON.parse(data));
+        console.log(data);
+        write2Table(JSON.parse(data));
     }, dataType);
-    info(POSTparam.command);
 }
 
 function calcShowRowCount() {
@@ -147,14 +120,23 @@ function calcShowRowCount() {
 }
 
 $(document).ready(function () {
-    getData();
-//    calcShowRowCount();
-
+    let postParam = {
+        'command': 'get_all',
+        'orderBy': 'calcid',
+        'orderByDimension': 'asc'
+    };
+    getData(postParam);
     $('.column_header').click(function () {
+        postParam.orderBy = getOrderBy(this).colName;
+        postParam.orderByDimension = getOrderBy(this).dimension;
+        postParam.command = 'get_all';
+        getData(postParam);
         let s = getOrderBy(this);
-        info('Сортировать по полю: <b>'
-                + s.colName + '</b>'
+        info('Режим отображения: <b>' + postParam.command + '</b><br />Сортировать по полю: <b>'
+                + postParam.orderBy + '</b>'
                 + '<br />Направление сортировки: <b>'
-                + s.dimension + '</b><br />');
+                + postParam.orderByDimension + '</b><br />');
     });
+
+
 });
