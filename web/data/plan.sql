@@ -10,6 +10,13 @@
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by calcid asc;
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now())) order by calcid asc;
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now()) and date_part('day', calc_date) = date_part('day', now())) order by calcid asc;
+-- select calcid,
+--     to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds 
+-- from plan 
+-- where (date_part('year', calc_date) = date_part('year', now()) 
+--     and date_part('month', calc_date) = date_part('month', now()) 
+--     and date_part('day', calc_date) = date_part('day', now())) order by calcid asc;
+
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan order by title asc;
 
 -- select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title from plan;
@@ -24,4 +31,10 @@
 
 -- INSERT INTO plan (title, calc_date) VALUES ('Сергей Худиев. Диалог с атеистами: православные аргументы', now());
 -- INSERT INTO plan (title, calc_date) VALUES ('JS Mythbusters, сборник советов и практик по написанию производительного JavaScript-кода', now());
--- INSERT INTO plan (title, calc_date) VALUES ('Анатомия каменных пришельцев', to_timestamp('04.05.2017', 'DD.MM.YYYY'));
+-- UPDATE plan set calc_date=now() WHERE calcid=3;
+
+-- select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now())) order by calcid asc) as calcrow;
+
+-- select localtimestamp(1), current_timestamp(2), now();
+
+-- select * from plan where calc_date > '2017-05-01';

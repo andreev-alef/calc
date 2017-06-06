@@ -78,11 +78,11 @@ public class CalcUtil {
             }
             break;
             case "get_all_for_current_month": {
-                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by %s %s) as calcrow;", orderBy, orderByDimension);
+                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now())) order by %s %s) as calcrow;", orderBy, orderByDimension);
             }
             break;
             case "get_all_for_current_day": {
-                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where date_part('year', calc_date) = date_part('year', now()) order by %s %s) as calcrow;", orderBy, orderByDimension);
+                queryString = String.format("select json_build_object('row', array_to_json(array_agg(calcrow))) as j from (select calcid, to_char(calc_date, 'DD.MM.YYYY') as calcdate, title, tirazh, cena_knigi, cena_na_tirazh_nds from plan where (date_part('year', calc_date) = date_part('year', now()) and date_part('month', calc_date) = date_part('month', now()) and date_part('day', calc_date) = date_part('day', now())) order by %s %s) as calcrow;", orderBy, orderByDimension);
             }
             break;
         }

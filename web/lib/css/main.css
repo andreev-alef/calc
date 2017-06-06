@@ -72,7 +72,7 @@
     cursor: pointer;
   }
   .calc_row:hover {
-    background-color: #D9EDF7  !important;
+    background-color: #D9EDF7 !important;
   }
   .calc_row:hover > td {
     text-decoration: underline;
@@ -81,6 +81,7 @@
     font-family: 'Open Sans';
     font-size: 16px;
     text-align: center;
+    vertical-align: middle !important;
     color: #3B7795;
     cursor: url('../img/updown32.ico'), pointer;
   }
